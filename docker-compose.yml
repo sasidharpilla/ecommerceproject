@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: ecommercepro-postgres-1
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecommerce
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./authservice
+      dockerfile: Dockerfile
+    container_name: ecommerce-auth-service
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ecommerce
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
