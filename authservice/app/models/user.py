@@ -9,3 +9,4 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)
     phone = Column(String, nullable=False)
+    role = Column(String, default="user")  # Add role field

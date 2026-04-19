@@ -6,6 +6,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
     phone: str
+    role: str = "user"  # Add role with default
 
 
 # ✅ Login Schema (YOU MISSED THIS)
