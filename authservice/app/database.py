@@ -6,6 +6,9 @@ import os
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@postgres:5432/ecommerce")
 
+if DATABASE_URL and "?" not in DATABASE_URL:
+    DATABASE_URL += "?sslmode=require"
+
 engine = None
 
 # Retry DB connection
