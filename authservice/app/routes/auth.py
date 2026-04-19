@@ -119,3 +119,12 @@ def update_user_role(user_id: int, new_role: str, current_user: dict = Depends(g
     user.role = new_role
     db.commit()
     return {"message": f"User role updated to {new_role}"}
+
+
+@router.get("/users")
+def get_users(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    users = db.query(User).all()
+    return [{"id": u.id, "name": u.name, "email": u.email, "role": u.role} for u in users]
